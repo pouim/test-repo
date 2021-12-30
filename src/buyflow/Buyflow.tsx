@@ -6,6 +6,7 @@ import SummaryStep from './SummaryStep'
 
 interface BuyflowProps {
   productId: ProductIds
+  isDesignerInsurance?: boolean
 }
 
 export enum ProductIds {
@@ -23,12 +24,16 @@ const URL = {
 }
 
 const Buyflow: React.FC<BuyflowProps> = (props) => {
-  const [currentStep, setStep] = useState('fname')
+  const { isDesignerInsurance = false, productId } = props
+
+  const initialCurrentStep: string = isDesignerInsurance ? 'fname' : 'email'
+
+  const [currentStep, setStep] = useState(initialCurrentStep)
   const [collectedData, updateData] = useState({
     email: '',
     age: 0,
     fname: '',
-    url: URL[props.productId],
+    url: URL[productId],
   })
   const getStepCallback = (nextStep: string) => (field: string, value: any) => {
     updateData({ ...collectedData, [field]: value })
@@ -36,7 +41,7 @@ const Buyflow: React.FC<BuyflowProps> = (props) => {
   }
   return (
     <>
-      <h4>Buying {PRODUCT_IDS_TO_NAMES[props.productId]}</h4>
+      <h4>Buying {PRODUCT_IDS_TO_NAMES[productId]}</h4>
       {(currentStep === 'fname' && (
         <NameStep cb={getStepCallback('email')} />
       )) ||
