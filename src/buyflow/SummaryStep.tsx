@@ -6,16 +6,21 @@ interface SummaryStepProps {
     email: string
     age: number
     fname: string
+    lname: string
     url: string
   }
 }
 
 const SummaryStep: React.FC<SummaryStepProps> = (props) => {
+  const { collectedData } = props
+  const { fname, lname, email, age } = collectedData
+
   return (
     <>
-      <div>First Name: {props.collectedData.fname}</div>
-      <div>Email: {props.collectedData.email}</div>
-      <div>Age: {props.collectedData.age}</div>
+      <div>First Name: {fname}</div>
+      <div>Last Name: {lname}</div>
+      <div>Email: {email}</div>
+      <div>Age: {age}</div>
       <div>
         <Link to={`/purchased=${props.collectedData.url}`}>Purchase</Link>
       </div>

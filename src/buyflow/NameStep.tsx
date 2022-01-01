@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 
 interface NameStepProps {
-  cb: (field: string, value: string) => void
+  cb: (field: string, value: string, field2: string, value2: string) => void
 }
 
 const NameStep: React.FC<NameStepProps> = (props) => {
   const [fname, setFname] = useState('')
-  //   const [lname, setLname] = useState('')
+  const [lname, setLname] = useState('')
   return (
     <>
       <div>
@@ -19,7 +19,19 @@ const NameStep: React.FC<NameStepProps> = (props) => {
           value={fname}
         ></input>
       </div>
-      <button onClick={() => props.cb('fname', fname)}>Next</button>
+      <div>
+        Last Name:{' '}
+        <input
+          type="lname"
+          onChange={({ target: { value } }) => {
+            setLname(value)
+          }}
+          value={lname}
+        ></input>
+      </div>
+      <button onClick={() => props.cb('fname', fname, 'lname', lname)}>
+        Next
+      </button>
     </>
   )
 }

@@ -17,7 +17,7 @@ const App = () => {
           </Route>
 
           <Route path="/buy/insurance_des">
-            <Buyflow productId={ProductIds.desIns} />
+            <Buyflow productId={ProductIds.desIns} isDesignerInsurance />
           </Route>
 
           <Route path="/">
