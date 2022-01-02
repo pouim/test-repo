@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
+import { ToBeUpdatedDataInterface } from './Buyflow'
 
 interface EmailStepProps {
-  cb: (field: string, value: string) => void
+  cb: (toBeUpdatedData: ToBeUpdatedDataInterface[]) => void
 }
 
 const EmailStep: React.FC<EmailStepProps> = (props) => {
   const [email, setEmail] = useState('')
   return (
-    <>
+    <form>
       <div>
         Email:{' '}
         <input
+          autoFocus
           type="email"
           onChange={({ target: { value } }) => {
             setEmail(value)
@@ -18,8 +20,13 @@ const EmailStep: React.FC<EmailStepProps> = (props) => {
           value={email}
         ></input>
       </div>
-      <button onClick={() => props.cb('email', email)}>Next</button>
-    </>
+      <button
+        type="submit"
+        onClick={() => props.cb([{ field: 'email', value: email }])}
+      >
+        Next
+      </button>
+    </form>
   )
 }
 

@@ -9,16 +9,17 @@ interface SummaryStepProps {
     lname: string
     url: string
   }
+  isDesignerInsurance: boolean
 }
 
 const SummaryStep: React.FC<SummaryStepProps> = (props) => {
-  const { collectedData } = props
+  const { collectedData, isDesignerInsurance } = props
   const { fname, lname, email, age } = collectedData
 
   return (
     <>
-      <div>First Name: {fname}</div>
-      <div>Last Name: {lname}</div>
+      {isDesignerInsurance && <div>First Name: {fname}</div>}
+      {isDesignerInsurance && <div>Last Name: {lname}</div>}
       <div>Email: {email}</div>
       <div>Age: {age}</div>
       <div>

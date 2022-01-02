@@ -9,6 +9,11 @@ interface BuyflowProps {
   isDesignerInsurance?: boolean
 }
 
+export interface ToBeUpdatedDataInterface {
+  field: string
+  value: string | number
+}
+
 export enum ProductIds {
   devIns = 'dev_ins',
   desIns = 'des_ins',
@@ -36,10 +41,20 @@ const Buyflow: React.FC<BuyflowProps> = (props) => {
     lname: '',
     url: URL[productId],
   })
-  const getStepCallback = (nextStep: string) => (field: string, value: any) => {
-    updateData({ ...collectedData, [field]: value })
-    setStep(nextStep)
+  const getStepCallback = (nextStep: string) => (
+    toBeUpdatedData: ToBeUpdatedDataInterface[]
+  ) => {
+    // to avoid unnecessary rerenders
+    Promise.resolve().then(() => {
+      updateData({
+        ...collectedData,
+        [toBeUpdatedData[0].field]: toBeUpdatedData[0].value,
+        [toBeUpdatedData[1]?.field]: toBeUpdatedData[1]?.value,
+      })
+      setStep(nextStep)
+    })
   }
+
   return (
     <>
       <h4>Buying {PRODUCT_IDS_TO_NAMES[productId]}</h4>
@@ -53,7 +68,10 @@ const Buyflow: React.FC<BuyflowProps> = (props) => {
           <AgeStep cb={getStepCallback('summary')} />
         )) ||
         (currentStep === 'summary' && (
-          <SummaryStep collectedData={collectedData} />
+          <SummaryStep
+            collectedData={collectedData}
+            isDesignerInsurance={isDesignerInsurance}
+          />
         ))}
     </>
   )

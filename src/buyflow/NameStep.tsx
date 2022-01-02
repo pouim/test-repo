@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
+import { ToBeUpdatedDataInterface } from './Buyflow'
 
 interface NameStepProps {
-  cb: (field: string, value: string, field2: string, value2: string) => void
+  cb: (toBeUpdatedData: ToBeUpdatedDataInterface[]) => void
 }
 
 const NameStep: React.FC<NameStepProps> = (props) => {
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   return (
-    <>
+    <form>
       <div>
         First Name:{' '}
         <input
+          autoFocus
           type="fname"
           onChange={({ target: { value } }) => {
             setFname(value)
@@ -29,10 +31,18 @@ const NameStep: React.FC<NameStepProps> = (props) => {
           value={lname}
         ></input>
       </div>
-      <button onClick={() => props.cb('fname', fname, 'lname', lname)}>
+      <button
+        type="submit"
+        onClick={() =>
+          props.cb([
+            { field: 'fname', value: fname },
+            { field: 'lname', value: lname },
+          ])
+        }
+      >
         Next
       </button>
-    </>
+    </form>
   )
 }
 

@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
+import { ToBeUpdatedDataInterface } from './Buyflow'
 
 interface AgeStepProps {
-  cb: (field: string, value: number) => void
+  cb: (toBeUpdatedData: ToBeUpdatedDataInterface[]) => void
 }
 
 const AgeStep: React.FC<AgeStepProps> = (props) => {
   const [age, setAge] = useState(0)
   return (
-    <>
+    <form>
       <div>
         Age:{' '}
         <input
+          autoFocus
           type="number"
           onChange={({ target: { value } }) => {
             setAge(Number(value))
@@ -18,8 +20,13 @@ const AgeStep: React.FC<AgeStepProps> = (props) => {
           value={age}
         ></input>
       </div>
-      <button onClick={() => props.cb('age', age)}>Next</button>
-    </>
+      <button
+        type="submit"
+        onClick={() => props.cb([{ field: 'age', value: age }])}
+      >
+        Next
+      </button>
+    </form>
   )
 }
 
